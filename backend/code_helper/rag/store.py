@@ -23,7 +23,16 @@ def ensure_index(pc: Pinecone, index_name: str = PINECONE_INDEX_NAME) -> Any:
     Ensure the Pinecone index exists with exactly 2048 dimensions and cosine metric.
     Fails loudly if an existing index has differing parameters.
     """
-    existing_indexes = [idx.name for idx in pc.list_indexes()]
+    try:
+        existing_indexes = [idx.name for idx in pc.list_indexes()]
+    except Exception as e:
+        if "401" in str(e) or "UNAUTHENTICATED" in str(e):
+            raise RuntimeError(
+                "Pinecone authentication failed (401 UNAUTHENTICATED). "
+                "Your PINECONE_API_KEY in backend/code_helper/.env appears to be invalid or expired. "
+                "Generate a fresh key at https://app.pinecone.io/ -> API Keys."
+            ) from e
+        raise
 
     if index_name in existing_indexes:
         desc = pc.describe_index(index_name)

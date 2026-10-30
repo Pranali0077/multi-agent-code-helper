@@ -14,7 +14,7 @@ export const AGENTS: AgentInfo[] = [
     role: "Finds code with RAG",
     color: "blue",
     description: "Finds where something is in the code using semantic (RAG) search.",
-    example: "Where is the search done?",
+    example: "Where is the User class defined?",
   },
   {
     name: "code_explainer",

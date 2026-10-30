@@ -13,6 +13,10 @@ from google.genai import types
 
 from code_helper.agent import root_agent
 from code_helper.trace import parse_event_trace, extract_final_answer
+from code_helper.settings import log_env_diagnostics
+
+# Safely log environment diagnostics on startup
+log_env_diagnostics(print)
 
 APP_NAME = "code_helper"
 USER_ID = "student"
